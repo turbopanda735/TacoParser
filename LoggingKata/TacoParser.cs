@@ -6,7 +6,7 @@
     public class TacoParser
     {
         readonly ILog logger = new TacoLogger();
-        
+
         public ITrackable Parse(string line)
         {
             logger.LogInfo("Begin parsing");
@@ -18,27 +18,45 @@
             if (cells.Length < 3)
             {
                 // Log that and return null
+                //logger.LogWarning();
                 // Do not fail if one record parsing fails, return null
                 return null; // TODO Implement
             }
 
             // grab the latitude from your array at index 0
+            var latitude = cells[0];
+
             // grab the longitude from your array at index 1
+            var longitude = cells[1];
+
             // grab the name from your array at index 2
+            var name = cells[2].Trim();
 
             // Your going to need to parse your string as a `double`
             // which is similar to parsing a string as an `int`
+            var latitudeDouble = double.Parse(latitude);
+            var longitudeDouble = double.Parse(longitude);
 
             // You'll need to create a TacoBell class
             // that conforms to ITrackable
 
             // Then, you'll need an instance of the TacoBell class
             // With the name and point set correctly
+            var location = new Point
+            {
+                Latitude = latitudeDouble,
+                Longitude = longitudeDouble
+            };
+            var tacoBell = new TacoBell()
+            {
+                Name = name,
+                Location = location
+            };
 
             // Then, return the instance of your TacoBell class
             // Since it conforms to ITrackable
 
-            return null;
+            return tacoBell;
         }
     }
 }
